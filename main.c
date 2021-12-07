@@ -15,6 +15,16 @@ void makeRandomTextFiles();
 void makeTextFileTemporalLocality();
 bool assessTemporalLocality();
 
+void calculateDifference();
+int findMin();
+void shortestSeekTimeFirst();
+
+
+struct node {
+    int distance;
+    bool accessed;
+};
+
 #define SMALL 15
 #define MEDIUM 30
 #define LARGE 60
@@ -76,6 +86,9 @@ int main(int argc, char *argv[])
         //Generate text file
         makeRandomTextFiles(p_fileName5, 199);
     }
+
+
+    shortestSeekTimeFirst(tableRequests, 100, 9);
     
 }
 
@@ -149,4 +162,65 @@ bool assessTemporalLocality()
     float tempFloat = (float)rand() / RAND_MAX;
 
     return tempFloat < 0.3;
+}
+
+void calculateDifference(int queue[], int head, struct node diff[], int requestSize) 
+{
+    for (int i = 0; i < requestSize; i++)
+    {
+        diff[i].distance = abs(queue[i] - head);
+    }
+}
+
+int findMin(struct node diff[], int requestSize)
+{
+    int index = -1, minimum = INT_MAX;
+    for (int i = 0; i < requestSize; i++)
+    {
+        if (!diff[i].accessed && minimum > diff[i].distance)
+        {
+            minimum = diff[i].distance;
+            index = i;
+        }
+    }
+    return index;
+}
+
+void shortestSeekTimeFirst(int request[], int head, int requestSize)
+{   
+    struct node diff[requestSize];
+
+    for (int i = 0; i< requestSize; i++) 
+    {
+        diff[i].distance = 0;
+        diff[i].accessed = false;
+    }
+
+    int seek_count = 0;
+
+    int seek_sequence[requestSize + 1];
+
+    for (int i = 0; i < requestSize; i++) 
+    {
+        seek_sequence[i] = head;
+        calculateDifference(request, head, diff, requestSize);
+
+        int index = findMin(diff, requestSize);
+
+        diff[index].accessed = true;
+
+        seek_count += diff[index].distance;
+
+        head = request[index];
+    }
+
+    seek_sequence[requestSize - 1] = head;
+
+    printf("Total number of seek operations: %d \n", head);
+    printf("Seeking sequence is: \n");
+    for (int i = 0; i < 7; i++)
+    {
+        printf("%d \n", seek_sequence[i]);
+    }
+
 }
