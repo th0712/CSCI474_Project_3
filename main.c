@@ -20,6 +20,7 @@ int findMin();
 void shortestSeekTimeFirst();
 int ArrayContains(int arr[], int pageReference, int size);
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
+void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
 bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
 int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
 void findNumber(int arr[], int num, int *const low, int *const high, int size);
@@ -94,6 +95,8 @@ int main(int argc, char *argv[])
 
     //shortestSeekTimeFirst(tableRequests, 100, 9);
     scanAlgorithm(tableRequests, true, 100, 9);
+    printf("\n------------------------------------\n");
+    CScanAlgorithm(tableRequests, true, 100, 9);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
@@ -270,6 +273,52 @@ void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         currTrack = nextTrack;
     }
 }
+//C-SCAN - Tom Hoskins
+void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
+{
+    bool currDirection = startDirection;
+    int alreadyUsed[size];
+    int currTrack = startTrack;
+    int prevTrack = startTrack;
+    int nextTrack, tracksTraversed;
+    for (int i = 0; i < size; i++)
+    {
+        if (currDirection)
+        {
+            nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
+            if ((nextTrack == 199) && (currTrack != 199))
+                nextTrack = nextTrackSCAN(requests, 0, size, currDirection);
+            if (currTrack == 199)
+                nextTrack = nextTrackSCAN(requests, 0, size, currDirection);
+            if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
+            {
+                i--;
+                currTrack = nextTrack;
+                continue;
+            }
+            tracksTraversed = abs(nextTrack - prevTrack);
+        }
+        if (!currDirection)
+        {
+            nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
+            if ((nextTrack == 0) && (currTrack != 0))
+                nextTrack = nextTrackSCAN(requests, 199, size, currDirection);
+            if(currTrack == 0)
+                nextTrack = nextTrackSCAN(requests, 199, size, currDirection);
+            if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
+            {
+                i--;
+                currTrack = nextTrack;
+                continue;
+            }
+            tracksTraversed = abs(prevTrack - nextTrack);
+        }
+        printf("%d %d\n", nextTrack, tracksTraversed);
+        prevTrack = nextTrack;
+        alreadyUsed[i] = nextTrack;
+        currTrack = nextTrack;
+    }
+}
 int ArrayContains(int arr[], int pageReference, int size)
 {
     for (int i = 0; i < size; i++)
@@ -325,8 +374,8 @@ int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection)
     return temp;
 }
 void findNumber(int arr[], int num, int* low, int* high, int size) {
-    *low = 0; //largest number lower than num, set initial value above num
-    *high = 199; //smallest number higher than num, set initial value below num
+    *low = 0; //largest number lower than num
+    *high = 199; //smallest number higher than num
     for (int i = 0; i < size; i++) {
         if ((arr[i] > *low) && (arr[i] < num) && (arr[i] != num)) {
             *low = arr[i];
