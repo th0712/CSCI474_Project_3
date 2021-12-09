@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
         printf("1 argument expected in format: \n programName");
         exit(1);
     }
-    int tableRequests[9] = {55,58,39,18,90,160,150,38,84};
+    int tableRequests[9] = {55,58,39,18,90,160,150,38,184};
 
     //Save fileName to variable for readability
     const char *p_fileName1 = "random1.txt";
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
 
 
     //shortestSeekTimeFirst(tableRequests, 100, 9);
-    scanAlgorithm(tableRequests, true, 0, 9);
+    scanAlgorithm(tableRequests, true, 100, 9);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
@@ -232,7 +232,9 @@ void shortestSeekTimeFirst(int request[], int head, int requestSize)
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size) 
 {
     bool currDirection = startDirection;
+    int alreadyUsed[size];
     int currTrack = startTrack;
+    int prevTrack = startTrack;
     int nextTrack, tracksTraversed;
     for (int i = 0; i < size; i++)
     {
@@ -243,14 +245,28 @@ void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         if (currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
-            tracksTraversed = nextTrack - currTrack;
+            if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
+            {
+                i--;
+                currTrack = nextTrack;
+                continue;
+            }
+            tracksTraversed = nextTrack - prevTrack;
         }
         if (!currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
-            tracksTraversed = currTrack - nextTrack;
+            if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
+            {
+                i--;
+                currTrack = nextTrack;
+                continue;
+            }
+            tracksTraversed = prevTrack - nextTrack;
         }
         printf("%d %d\n", nextTrack, tracksTraversed);
+        prevTrack = nextTrack;
+        alreadyUsed[i] = nextTrack;
         currTrack = nextTrack;
     }
 }
