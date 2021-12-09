@@ -251,6 +251,7 @@ void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size
             tracksTraversed = currTrack - nextTrack;
         }
         printf("%d %d\n", nextTrack, tracksTraversed);
+        currTrack = nextTrack;
     }
 }
 int ArrayContains(int arr[], int pageReference, int size)
@@ -308,13 +309,13 @@ int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection)
     return temp;
 }
 void findNumber(int arr[], int num, int* low, int* high, int size) {
-    *low = num + 1; //largest number lower than num, set initial value above num
-    *high = num - 1; //smallest number higher than num, set initial value below num
+    *low = 0; //largest number lower than num, set initial value above num
+    *high = 199; //smallest number higher than num, set initial value below num
     for (int i = 0; i < size; i++) {
-        if ((arr[i] > *low) & (arr[i] < num)) {
+        if ((arr[i] > *low) && (arr[i] < num) && (arr[i] != num)) {
             *low = arr[i];
         }
-        if ((arr[i] < *high) & (arr[i] > num)) {
+        if ((arr[i] < *high) && (arr[i] > num) && (arr[i] != num)) {
             *high = arr[i];
         }
     }
