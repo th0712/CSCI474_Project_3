@@ -18,7 +18,11 @@ bool assessTemporalLocality();
 void calculateDifference();
 int findMin();
 void shortestSeekTimeFirst();
-
+int ArrayContains(int arr[], int pageReference, int size);
+void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
+bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
+int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
+void findNumber(int arr[], int num, int *const low, int *const high, int size);
 
 struct node {
     int distance;
@@ -88,8 +92,8 @@ int main(int argc, char *argv[])
     }
 
 
-    shortestSeekTimeFirst(tableRequests, 100, 9);
-    
+    //shortestSeekTimeFirst(tableRequests, 100, 9);
+    scanAlgorithm(tableRequests, true, 0, 9);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
@@ -223,4 +227,95 @@ void shortestSeekTimeFirst(int request[], int head, int requestSize)
         printf("%d \n", seek_sequence[i]);
     }
 
+}
+//SCAN - Tom Hoskins
+void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size) 
+{
+    bool currDirection = startDirection;
+    int currTrack = startTrack;
+    int nextTrack, tracksTraversed;
+    for (int i = 0; i < size; i++)
+    {
+        if (!continueDirection(requests, currTrack, size, currDirection))
+        {
+            currDirection = !currDirection;
+        }
+        if (currDirection)
+        {
+            nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
+            tracksTraversed = nextTrack - currTrack;
+        }
+        if (!currDirection)
+        {
+            nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
+            tracksTraversed = currTrack - nextTrack;
+        }
+        printf("%d %d\n", nextTrack, tracksTraversed);
+    }
+}
+int ArrayContains(int arr[], int pageReference, int size)
+{
+    for (int i = 0; i < size; i++)
+    {
+        if (arr[i] == pageReference)
+            return i; //return index containing value
+    }
+    return -1; //-1 = page is not yet in array
+}
+//Continue track direction method for SCAN algorithm
+bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection)
+{
+    //Downward direction
+    if (currentDirection == false)
+    {
+        if (lastTrack == 0) {
+            return false;
+        }
+        for (int i = 0; i < size; i++)
+        {
+            if (arr[i] < lastTrack)
+                return true; //There is still a smaller value
+        }
+    }
+    if (currentDirection == true)
+    {
+        if (lastTrack == 199) {
+            return false;
+        }
+        for (int i = 0; i < size; i++)
+        {
+            if (arr[i] > lastTrack)
+                return true; //There is still a larger value 
+        }
+    }
+    return false;
+}
+
+int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection)
+{
+    int temp = lastTrack;
+    int low;
+    int high;
+    findNumber(arr, lastTrack, &low, &high, size);
+    if (currentDirection == false)
+    {
+        temp = low;
+    }
+    if (currentDirection == true)
+    {
+        temp = high;
+    }
+    return temp;
+}
+void findNumber(int arr[], int num, int* low, int* high, int size) {
+    *low = num + 1; //largest number lower than num, set initial value above num
+    *high = num - 1; //smallest number higher than num, set initial value below num
+    for (int i = 0; i < size; i++) {
+        if ((arr[i] > *low) & (arr[i] < num)) {
+            *low = arr[i];
+        }
+        if ((arr[i] < *high) & (arr[i] > num)) {
+            *high = arr[i];
+        }
+    }
 }
