@@ -18,6 +18,8 @@ bool assessTemporalLocality();
 void calculateDifference();
 int findMin();
 void shortestSeekTimeFirst();
+void firstInFirstOut();
+void lastInFirstOut();
 int ArrayContains(int arr[], int pageReference, int size);
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
 void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
@@ -93,7 +95,12 @@ int main(int argc, char *argv[])
     }
 
 
-    //shortestSeekTimeFirst(tableRequests, 100, 9);
+    shortestSeekTimeFirst(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
+    firstInFirstOut(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
+    lastInFirstOut(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
     scanAlgorithm(tableRequests, true, 100, 9);
     printf("\n------------------------------------\n");
     CScanAlgorithm(tableRequests, true, 100, 9);
@@ -192,45 +199,105 @@ int findMin(struct node diff[], int requestSize)
     }
     return index;
 }
-
-void shortestSeekTimeFirst(int request[], int head, int requestSize)
+// SSTF - Peter Fraser
+void shortestSeekTimeFirst(int request[], int head, int size)
 {   
-    struct node diff[requestSize];
+    struct node diff[size];
 
-    for (int i = 0; i< requestSize; i++) 
+
+    for (int i = 0; i< size; i++) 
     {
         diff[i].distance = 0;
         diff[i].accessed = false;
     }
 
-    int seek_count = 0;
+    int seekCount = 0;
+    int seekDistance[size];
 
-    int seek_sequence[requestSize + 1];
+    int seekSequence[size];
 
-    for (int i = 0; i < requestSize; i++) 
+    for (int i = 0; i < size; i++) 
     {
-        seek_sequence[i] = head;
-        calculateDifference(request, head, diff, requestSize);
+        seekSequence[i] = head;
+        calculateDifference(request, head, diff, size);
 
-        int index = findMin(diff, requestSize);
+        int index = findMin(diff, size);
 
         diff[index].accessed = true;
 
-        seek_count += diff[index].distance;
+        seekCount += diff[index].distance;
+        seekDistance[i] = diff[index].distance;
 
         head = request[index];
     }
 
-    seek_sequence[requestSize - 1] = head;
+    seekSequence[size - 1] = head;
 
-    printf("Total number of seek operations: %d \n", head);
-    printf("Seeking sequence is: \n");
-    for (int i = 0; i < 7; i++)
+    printf("Seeking sequence for SSTF is: \n");
+    printf("Head \t|\t Distance\n");
+    printf("--------------------------\n");
+    for (int i = 0; i < size; i++)
     {
-        printf("%d \n", seek_sequence[i]);
+        printf("%d \t|\t %d\n", seekSequence[i], seekDistance[i]);
     }
 
+    int seekAverage = seekCount / size;
+    printf("--------------------------\n");
+    printf("Total number of seek time for SSTF: %d \n", seekCount);
+    printf("Average seek time for SSTF: %d\n\n", seekAverage);
 }
+
+//Fifo - Peter Fraser
+void firstInFirstOut(int request[], int head, int size) {
+    int seekCount = 0;
+    int distance, currentTrack;
+
+    printf("Seeking sequence for FIFO is: \n");
+    printf("Head \t|\t Distance\n");
+    printf("--------------------------\n");
+    for (int i = 0; i < size; i++) {
+        currentTrack = request[i];
+
+        distance = abs(currentTrack - head);
+
+        seekCount += distance;
+
+        head = currentTrack;
+        printf("%d \t|\t %d\n",head, distance);
+    }
+
+    int seekAverage = seekCount / size;
+    printf("--------------------------\n");
+    printf("Total number of seek time for FIFO: %d \n", seekCount);
+    printf("Average seek time for FIFO: %d \n\n", seekAverage);
+}
+
+// LIFO - Peter Fraser
+void lastInFirstOut(int request[], int head, int size) {
+    int seekCount = 0;
+    int distance, currentTrack;
+
+    printf("Seeking sequence for LIFO is: \n");
+    printf("Head \t|\t Distance\n");
+    printf("--------------------------\n");
+    for (int i = size-1; i >= 0; i-- ) {
+        currentTrack = request[i];
+
+        distance = abs(currentTrack - head);
+
+        seekCount += distance;
+
+        head = currentTrack;
+        printf("%d \t|\t %d\n",head, distance);
+    }
+
+    int seekAverage = seekCount / size;
+    printf("--------------------------\n");
+    printf("Total number of seek time for LIFO: %d \n", seekCount);
+    printf("Average seek time for LIFO: %d \n", seekAverage);
+}
+
+
 //SCAN - Tom Hoskins
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size) 
 {
