@@ -507,6 +507,7 @@ int lastInFirstOut(int request[], int head, int size) {
 int scanAlgorithm(int requests[], bool startDirection, int startTrack, int size) 
 {
     int totalTracksTraversed = 0;
+    int count = 0;
     bool currDirection = startDirection;
     int alreadyUsed[size];
     for(int i = 0; i < size; i++)
@@ -521,6 +522,10 @@ int scanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
         if (!continueDirection(requests, alreadyUsed, currTrack, size, currDirection))
         {
             currDirection = !currDirection;
+            for (int j = 0; j < size; j++)
+            {
+                alreadyUsed[j] = -1;
+            }
         }
         if (currDirection)
         {
@@ -529,6 +534,9 @@ int scanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
             {
                 i--;
                 currTrack = nextTrack;
+                count++;
+                if (count == 10*size)
+                    break;
                 continue;
             }
             tracksTraversed = nextTrack - prevTrack;
@@ -536,26 +544,25 @@ int scanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
         if (!currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
-            printf("%d ", nextTrack);
             if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
             {
                 i--;
                 currTrack = nextTrack;
+                count++;
+                if (count == 10*size)
+                    break;
                 continue;
             }
             tracksTraversed = prevTrack - nextTrack;
         }
+        printf("%d %d\n", nextTrack, tracksTraversed);
         totalTracksTraversed += tracksTraversed;
         prevTrack = nextTrack;
-        if(nextTrack == 199 || nextTrack == 0)
-        {
-            for(int j = 0; j < size; j++)
-            {
-                alreadyUsed[j] = -1;
-            }
-        }
         alreadyUsed[i] = nextTrack;
         currTrack = nextTrack;
+        count++;
+        if (count == 10*size)
+            break;
     }
 
     return totalTracksTraversed;
@@ -564,6 +571,7 @@ int scanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
 int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size)
 {
     int totalTracksTraversed = 0;
+    int count = 0;
     bool currDirection = startDirection;
     int alreadyUsed[size];
     for(int i = 0; i < size; i++)
@@ -579,33 +587,49 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
             //printf("%d ", nextTrack);
-            if ((nextTrack == 199) && (currTrack != 199))
+            if (!continueDirection(requests, alreadyUsed, currTrack, size, currDirection))
+            {
                 nextTrack = nextTrackSCAN(requests, -1, size, currDirection);
-            if (currTrack == 199)
-                nextTrack = nextTrackSCAN(requests, -1, size, currDirection);
+                for (int j = 0; j < size; j++)
+                {
+                    alreadyUsed[j] = -1;
+                }
+            }
             if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
             {
                 i--;
                 currTrack = nextTrack;
+                count++;
                 continue;
             }
-            tracksTraversed = abs(nextTrack - prevTrack);
+            if ((nextTrack - prevTrack) < 0)
+                tracksTraversed = (200+nextTrack) - prevTrack;
+            else
+                tracksTraversed = abs(nextTrack - prevTrack);
         }
         if (!currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
            // printf("%d ", nextTrack);
-            if ((nextTrack == 0) && (currTrack != 0))
-                nextTrack = nextTrackSCAN(requests, 199, size, currDirection);
-            if(currTrack == 0)
-                nextTrack = nextTrackSCAN(requests, 199, size, currDirection);
+            if (!continueDirection(requests, alreadyUsed, currTrack, size, currDirection))
+            {
+                nextTrack = nextTrackSCAN(requests, 200, size, currDirection);
+                for (int j = 0; j < size; j++)
+                {
+                    alreadyUsed[j] = -1;
+                }
+            }
             if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
             {
                 i--;
                 currTrack = nextTrack;
+                count++;
                 continue;
             }
-            tracksTraversed = abs(prevTrack - nextTrack);
+            if ((prevTrack - nextTrack) < 0)
+                tracksTraversed = (200-nextTrack)+prevTrack;
+            else
+                tracksTraversed = abs(nextTrack - prevTrack);
         }
         printf("%d %d\n", nextTrack, tracksTraversed);
         totalTracksTraversed += tracksTraversed;
@@ -619,6 +643,9 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         // }
         alreadyUsed[i] = nextTrack;
         currTrack = nextTrack;
+        count++;
+        if (count == size)
+            break;
     }
     return totalTracksTraversed;
 }
@@ -797,6 +824,7 @@ int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection)
     int temp = lastTrack;
     int low;
     int high;
+
     findNumber(arr, lastTrack, &low, &high, size);
     if (currentDirection == false)
     {
