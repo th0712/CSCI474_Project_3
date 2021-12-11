@@ -26,6 +26,7 @@ void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
 bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
 int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
 void findNumber(int arr[], int num, int *const low, int *const high, int size);
+void nStepScan(int arr[], int startVal, int size, int N, int M);
 
 struct node {
     int distance;
@@ -386,6 +387,19 @@ void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
         currTrack = nextTrack;
     }
 }
+
+//N-step-scan
+void nStepScan(int arr[], int startVal, int size, int N, int M) {
+    int requests[];
+    for (int i = M; i< N, i++)
+        requests[i] = arr[i];
+    scanAlgorithm(requests, true, int startVal, size);
+    if (M = 0)
+        nStepScan(requests, startVal, size, N + N, N);
+    else
+        nStepScan(requests, startVal, size, N + M, M);
+}
+
 int ArrayContains(int arr[], int pageReference, int size)
 {
     for (int i = 0; i < size; i++)
