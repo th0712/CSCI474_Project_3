@@ -393,6 +393,7 @@ void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
     }
 }
 
+
 void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size, int queueLength)
 {
     int numberOfQueueLoads = (int) size/queueLength;
@@ -426,6 +427,14 @@ void nStepScan(int arr[], int startVal, int size, int N, int M) {
     for (int i = M; i< N; i++)
         requests[i] = arr[i];
     scanAlgorithm(requests, true, startVal, size);
+
+//N-step-scan
+void nStepScan(int arr[], int startVal, int size, int N, int M) {
+    int requests[];
+    for (int i = M; i< N, i++)
+        requests[i] = arr[i];
+    scanAlgorithm(requests, true, int startVal, size);
+
     if (M = 0)
         nStepScan(requests, startVal, size, N + N, N);
     else
