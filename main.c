@@ -23,6 +23,7 @@ void lastInFirstOut();
 int ArrayContains(int arr[], int pageReference, int size);
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
 void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
+void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size, int queueLength);
 bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
 int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
 void findNumber(int arr[], int num, int *const low, int *const high, int size);
@@ -105,6 +106,8 @@ int main(int argc, char *argv[])
     scanAlgorithm(tableRequests, true, 100, 9);
     printf("\n------------------------------------\n");
     CScanAlgorithm(tableRequests, true, 100, 9);
+    printf("\n------------------------------------\n");
+    FScanAlgorithm(tableRequests, true, 100, 9, 4);
     printf("\n------------------------------------\n");
     nStepScan(tableRequests, 100, 9, 3, 0/* Keep 0 */);
 }
@@ -390,12 +393,48 @@ void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
     }
 }
 
+
+void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size, int queueLength)
+{
+    int numberOfQueueLoads = (int) size/queueLength;
+    int requestRemainder = size % numberOfQueueLoads;
+    int activeQueue[queueLength] ;
+    int requestCounter = 0 ;
+
+    for(int i = 0; i < numberOfQueueLoads; i++)
+    {
+        for(int j = 0; j < queueLength; j++)
+        {
+            activeQueue[j] = requests[j + requestCounter];
+        }
+        requestCounter += queueLength;
+        scanAlgorithm(activeQueue, startDirection, startTrack, queueLength);
+    }
+
+    if(requestRemainder != 0)
+    {
+        int remainderQueue[requestRemainder];
+        for(int k = 0; k < requestRemainder; k++)
+        {
+            remainderQueue[k] = requests[k + requestCounter];
+        }
+        scanAlgorithm(remainderQueue, startDirection, startTrack, requestRemainder);
+    }
+}
+//N-step-scan
+void nStepScan(int arr[], int startVal, int size, int N, int M) {
+    int requests[N - M];
+    for (int i = M; i< N; i++)
+        requests[i] = arr[i];
+    scanAlgorithm(requests, true, startVal, size);
+
 //N-step-scan
 void nStepScan(int arr[], int startVal, int size, int N, int M) {
     int requests[];
     for (int i = M; i< N, i++)
         requests[i] = arr[i];
     scanAlgorithm(requests, true, int startVal, size);
+
     if (M = 0)
         nStepScan(requests, startVal, size, N + N, N);
     else
