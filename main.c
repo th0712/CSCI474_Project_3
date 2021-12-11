@@ -23,6 +23,7 @@ void lastInFirstOut();
 int ArrayContains(int arr[], int pageReference, int size);
 void scanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
 void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size);
+void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size, int queueLength);
 bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
 int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
 void findNumber(int arr[], int num, int *const low, int *const high, int size);
@@ -95,15 +96,17 @@ int main(int argc, char *argv[])
     }
 
 
-    shortestSeekTimeFirst(tableRequests, 100, 9);
+    // shortestSeekTimeFirst(tableRequests, 100, 9);
+    // printf("\n------------------------------------\n");
+    // firstInFirstOut(tableRequests, 100, 9);
+    // printf("\n------------------------------------\n");
+    // lastInFirstOut(tableRequests, 100, 9);
+    // printf("\n------------------------------------\n");
+    // scanAlgorithm(tableRequests, true, 100, 9);
+    // printf("\n------------------------------------\n");
+    // CScanAlgorithm(tableRequests, true, 100, 9);
     printf("\n------------------------------------\n");
-    firstInFirstOut(tableRequests, 100, 9);
-    printf("\n------------------------------------\n");
-    lastInFirstOut(tableRequests, 100, 9);
-    printf("\n------------------------------------\n");
-    scanAlgorithm(tableRequests, true, 100, 9);
-    printf("\n------------------------------------\n");
-    CScanAlgorithm(tableRequests, true, 100, 9);
+    FScanAlgorithm(tableRequests, true, 100, 9, 4);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
@@ -384,6 +387,34 @@ void CScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
         prevTrack = nextTrack;
         alreadyUsed[i] = nextTrack;
         currTrack = nextTrack;
+    }
+}
+
+void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size, int queueLength)
+{
+    int numberOfQueueLoads = (int) size/queueLength;
+    int requestRemainder = size % numberOfQueueLoads;
+    int activeQueue[queueLength] ;
+    int requestCounter = 0 ;
+
+    for(int i = 0; i < numberOfQueueLoads; i++)
+    {
+        for(int j = 0; j < queueLength; j++)
+        {
+            activeQueue[j] = requests[j + requestCounter];
+        }
+        requestCounter += queueLength;
+        scanAlgorithm(activeQueue, startDirection, startTrack, queueLength);
+    }
+
+    if(requestRemainder != 0)
+    {
+        int remainderQueue[requestRemainder];
+        for(int k = 0; k < requestRemainder; k++)
+        {
+            remainderQueue[k] = requests[k + requestCounter];
+        }
+        scanAlgorithm(remainderQueue, startDirection, startTrack, requestRemainder);
     }
 }
 int ArrayContains(int arr[], int pageReference, int size)
