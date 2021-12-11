@@ -163,7 +163,7 @@ int main(int argc, char *argv[])
     printf("\n------------------------------------\n");
     FScanAlgorithm(tableRequests, true, 0, 9, 4);
     printf("\n------------------------------------\n");
-    //nStepScan(tableRequests, 0, 9, 9, 0, 0/* Keep 0 */);
+    nStepScan(tableRequests, 0, 9, 9, 0, 0/* Keep 0 */);
 
     printf("Given example array: {55,58,39,18,90,160,150,38,184}\nHead begins at track 199\n");
     shortestSeekTimeFirst(tableRequests, 199, 9);
@@ -179,6 +179,7 @@ int main(int argc, char *argv[])
     FScanAlgorithm(tableRequests, true, 199, 9, 4);
     printf("\n------------------------------------\n");
     //nStepScan(tableRequests, 199, 9, 3, 0, 0/* Keep 0 */);
+
 
     int trackPointer[3] = {0, 100, 199};
     for(int i = 0; i < 3; i++)
@@ -198,105 +199,108 @@ int main(int argc, char *argv[])
         printf("\n------------------------------------\n");
         temp = CScanAlgorithm(random1, true, trackPointer[i], 1000);
         printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        printf("\n\n\n\nThis line of code is executing.\n\n\n\n");
         printf("\n------------------------------------\n");
+        printf("\n\n\n\nThis line of code is executing.\n\n\n\n");
         temp = FScanAlgorithm(random1, true, trackPointer[i], 1000, 4);
-        printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        // temp = nStepScan(random1, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
-        // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n\n\n");
+        // printf("\n\n\n\nThis line of code is executing.\n\n\n\n");
+        // printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // // temp = nStepScan(random1, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
+        // // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n\n\n");
 
-        printf("File 2 Track pointer beginning at %d:", trackPointer[i]);
-        temp = shortestSeekTimeFirst(random2, trackPointer[i], 1000);
-        printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = firstInFirstOut(random2, trackPointer[i], 1000);
-        printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = lastInFirstOut(random2, trackPointer[i], 1000);
-        printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = scanAlgorithm(random2, true, trackPointer[i], 1000);
-        printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = CScanAlgorithm(random2, true, trackPointer[i], 1000);
-        printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = FScanAlgorithm(random2, true, trackPointer[i], 1000, 4);
-        printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        // temp = nStepScan(random2, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
-        // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n\n\n");
+        // printf("File 2 Track pointer beginning at %d:", trackPointer[i]);
+        // temp = shortestSeekTimeFirst(random2, trackPointer[i], 1000);
+        // printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = firstInFirstOut(random2, trackPointer[i], 1000);
+        // printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = lastInFirstOut(random2, trackPointer[i], 1000);
+        // printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = scanAlgorithm(random2, true, trackPointer[i], 1000);
+        // printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = CScanAlgorithm(random2, true, trackPointer[i], 1000);
+        // printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = FScanAlgorithm(random2, true, trackPointer[i], 1000, 4);
+        // printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // // temp = nStepScan(random2, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
+        // // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n\n\n");
 
-        printf("File 3 Track pointer beginning at %d:", trackPointer[i]);
-        temp = shortestSeekTimeFirst(random3, trackPointer[i], 1000);
-        printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = firstInFirstOut(random3, trackPointer[i], 1000);
-        printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = lastInFirstOut(random3, trackPointer[i], 1000);
-        printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = scanAlgorithm(random3, true, trackPointer[i], 1000);
-        printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = CScanAlgorithm(random3, true, trackPointer[i], 1000);
-        printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = FScanAlgorithm(random3, true, trackPointer[i], 1000, 4);
-        printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        // temp = nStepScan(random3, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
-        // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n\n\n");
+        // printf("File 3 Track pointer beginning at %d:", trackPointer[i]);
+        // temp = shortestSeekTimeFirst(random3, trackPointer[i], 1000);
+        // printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = firstInFirstOut(random3, trackPointer[i], 1000);
+        // printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = lastInFirstOut(random3, trackPointer[i], 1000);
+        // printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = scanAlgorithm(random3, true, trackPointer[i], 1000);
+        // printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = CScanAlgorithm(random3, true, trackPointer[i], 1000);
+        // printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = FScanAlgorithm(random3, true, trackPointer[i], 1000, 4);
+        // printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // // temp = nStepScan(random3, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
+        // // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n\n\n");
 
-        printf("File 3 Track pointer beginning at %d:", trackPointer[i]);
-        temp = shortestSeekTimeFirst(random4, trackPointer[i], 1000);
-        printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = firstInFirstOut(random4, trackPointer[i], 1000);
-        printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = lastInFirstOut(random4, trackPointer[i], 1000);
-        printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = scanAlgorithm(random4, true, trackPointer[i], 1000);
-        printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = CScanAlgorithm(random4, true, trackPointer[i], 1000);
-        printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = FScanAlgorithm(random4, true, trackPointer[i], 1000, 4);
-        printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        // temp = nStepScan(random4, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
-        // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n\n\n");
+        // printf("File 3 Track pointer beginning at %d:", trackPointer[i]);
+        // temp = shortestSeekTimeFirst(random4, trackPointer[i], 1000);
+        // printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = firstInFirstOut(random4, trackPointer[i], 1000);
+        // printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = lastInFirstOut(random4, trackPointer[i], 1000);
+        // printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = scanAlgorithm(random4, true, trackPointer[i], 1000);
+        // printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = CScanAlgorithm(random4, true, trackPointer[i], 1000);
+        // printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = FScanAlgorithm(random4, true, trackPointer[i], 1000, 4);
+        // printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // // temp = nStepScan(random4, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
+        // // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n\n\n");
 
-        printf("File 5 Track pointer beginning at %d:", trackPointer[i]);
-        temp = shortestSeekTimeFirst(random5, trackPointer[i], 1000);
-        printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = firstInFirstOut(random5, trackPointer[i], 1000);
-        printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = lastInFirstOut(random5, trackPointer[i], 1000);
-        printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = scanAlgorithm(random5, true, trackPointer[i], 1000);
-        printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = CScanAlgorithm(random5, true, trackPointer[i], 1000);
-        printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        temp = FScanAlgorithm(random5, true, trackPointer[i], 1000, 4);
-        printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n------------------------------------\n");
-        // temp = nStepScan(random5, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
-        // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
-        printf("\n\n\n");
+        // printf("File 5 Track pointer beginning at %d:", trackPointer[i]);
+        // temp = shortestSeekTimeFirst(random5, trackPointer[i], 1000);
+        // printf("SSTF:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = firstInFirstOut(random5, trackPointer[i], 1000);
+        // printf("FIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = lastInFirstOut(random5, trackPointer[i], 1000);
+        // printf("LIFO:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = scanAlgorithm(random5, true, trackPointer[i], 1000);
+        // printf("SCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = CScanAlgorithm(random5, true, trackPointer[i], 1000);
+        // printf("CSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // temp = FScanAlgorithm(random5, true, trackPointer[i], 1000, 4);
+        // printf("FSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n------------------------------------\n");
+        // // temp = nStepScan(random5, trackPointer[i], 1000, 3, 0, 0/* Keep 0 */);
+        // // printf("NSCAN:\nTotal Tracks Traversed : %d, Average Tracks Traversed per entry: %f", temp, (float) temp/1000);
+        // printf("\n\n\n");
     }
 
 
@@ -562,6 +566,10 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
     int totalTracksTraversed = 0;
     bool currDirection = startDirection;
     int alreadyUsed[size];
+    for(int i = 0; i < size; i++)
+    {
+        alreadyUsed[i] = -1;
+    }
     int currTrack = startTrack;
     int prevTrack = startTrack;
     int nextTrack, tracksTraversed;
@@ -570,11 +578,11 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         if (currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
-            printf("%d ", nextTrack);
+            //printf("%d ", nextTrack);
             if ((nextTrack == 199) && (currTrack != 199))
-                nextTrack = nextTrackSCAN(requests, 0, size, currDirection);
+                nextTrack = nextTrackSCAN(requests, -1, size, currDirection);
             if (currTrack == 199)
-                nextTrack = nextTrackSCAN(requests, 0, size, currDirection);
+                nextTrack = nextTrackSCAN(requests, -1, size, currDirection);
             if (ArrayContains(alreadyUsed, nextTrack, size) != -1)
             {
                 i--;
@@ -586,7 +594,7 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         if (!currDirection)
         {
             nextTrack = nextTrackSCAN(requests, currTrack, size, currDirection);
-            printf("%d ", nextTrack);
+           // printf("%d ", nextTrack);
             if ((nextTrack == 0) && (currTrack != 0))
                 nextTrack = nextTrackSCAN(requests, 199, size, currDirection);
             if(currTrack == 0)
@@ -602,7 +610,7 @@ int CScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         printf("%d %d\n", nextTrack, tracksTraversed);
         totalTracksTraversed += tracksTraversed;
         prevTrack = nextTrack;
-        // if(nextTrack == 199 || nextTrack == 0)
+        // if(nextTrack == startTrack)
         // {
         //     for(int j = 0; j < size; j++)
         //     {
@@ -675,6 +683,77 @@ int FScanAlgorithm(int requests[], bool startDirection, int startTrack, int size
         
 // }
 
+//N-step-scan
+int nStepScan(int arr[], int startVal, int size, int N, int M, int totalTracksTraversed) {
+    int requests_0[N];
+    int requests[M];
+    
+    if(M == 0)
+    {
+        if(N<size)
+        {
+            for (int i = M; i< N; i++)
+            {
+                requests_0[i] = arr[i];
+                if(i=size) break;
+            }
+
+            if (M = 0)
+            {
+                nStepScan(arr, startVal, size, N + N, N, totalTracksTraversed);
+                totalTracksTraversed += scanAlgorithm(requests_0, true, startVal, N);
+            }
+            else
+            {
+                nStepScan(arr, startVal, size, N + M, M, totalTracksTraversed);
+                totalTracksTraversed += scanAlgorithm(requests_0, true, startVal, M);
+            }
+        }
+    }
+    else
+    {
+        if(N<size)
+        {
+            for (int i = M; i< N; i++)
+            {
+                requests[i] = arr[i];
+                if(i=size) break;
+            }
+
+            if (M = 0)
+            {
+                nStepScan(arr, startVal, size, N + N, N, totalTracksTraversed);
+                totalTracksTraversed += scanAlgorithm(requests, true, startVal, N);
+            }
+            else
+            {
+                nStepScan(arr, startVal, size, N + M, M, totalTracksTraversed);
+                totalTracksTraversed += scanAlgorithm(requests, true, startVal, M);
+            }
+        }
+    }
+    return totalTracksTraversed;
+    // })
+    // if(N<size){
+    //     for (int i = M; i< N; i++){
+    //         requests[i] = arr[i];
+    //         if(i=size) break;
+    //     }
+
+    //     if (M = 0){
+    //         nStepScan(arr, startVal, size, N + N, N, totalTracksTraversed);
+    //         totalTracksTraversed += scanAlgorithm(requests, true, startVal, N);
+    //     }
+    //     else{
+    //         nStepScan(arr, startVal, size, N + M, M, totalTracksTraversed);
+    //         totalTracksTraversed += scanAlgorithm(requests, true, startVal, M);
+    //     }
+    // }
+    // return totalTracksTraversed;
+}
+
+
+
 int ArrayContains(int arr[], int pageReference, int size)
 {
     for (int i = 0; i < size; i++)
@@ -730,14 +809,15 @@ int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection)
     return temp;
 }
 void findNumber(int arr[], int num, int* low, int* high, int size) {
-    *low = -1; //largest number lower than num
-    *high = 200; //smallest number higher than num
+    *low = 0; //largest number lower than num
+    *high = 199; //smallest number higher than num
     for (int i = 0; i < size; i++) {
-        if ((arr[i] >= *low) && (arr[i] < num) && (arr[i] != num)) {
+        if ((arr[i] > *low) && (arr[i] < num) && (arr[i] != num)) {
             *low = arr[i];
         }
-        if ((arr[i] <= *high) && (arr[i] > num) && (arr[i] != num)) {
+        if ((arr[i] < *high) && (arr[i] > num) && (arr[i] != num)) {
             *high = arr[i];
         }
     }
 }
+
