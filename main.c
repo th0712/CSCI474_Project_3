@@ -423,22 +423,24 @@ void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
 }
 //N-step-scan
 void nStepScan(int arr[], int startVal, int size, int N, int M) {
-    int requests[N - M];
-    for (int i = M; i< N; i++)
-        requests[i] = arr[i];
-    scanAlgorithm(requests, true, startVal, size);
+    if(M = 0) int requests[N];
+    else int requests[M];
+    
+    if(N<size){
+        for (int i = M; i< N; i++){
+            requests[i] = arr[i];
+            if(i=size) break;
+        }
 
-//N-step-scan
-void nStepScan(int arr[], int startVal, int size, int N, int M) {
-    int requests[];
-    for (int i = M; i< N, i++)
-        requests[i] = arr[i];
-    scanAlgorithm(requests, true, int startVal, size);
-
-    if (M = 0)
-        nStepScan(requests, startVal, size, N + N, N);
-    else
-        nStepScan(requests, startVal, size, N + M, M);
+        if (M = 0){
+            nStepScan(arr, startVal, size, N + N, N);
+            scanAlgorithm(requests, true, startVal, N);
+        }
+        else{
+            nStepScan(arr, startVal, size, N + M, M);
+            scanAlgorithm(requests, true, startVal, M);
+        }
+    }
 }
 
 int ArrayContains(int arr[], int pageReference, int size)
