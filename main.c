@@ -105,6 +105,8 @@ int main(int argc, char *argv[])
     scanAlgorithm(tableRequests, true, 100, 9);
     printf("\n------------------------------------\n");
     CScanAlgorithm(tableRequests, true, 100, 9);
+    printf("\n------------------------------------\n");
+    nStepScan(tableRequests, 100, 9, 3, 0/* Keep 0 */);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
