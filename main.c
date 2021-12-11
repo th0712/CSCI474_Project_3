@@ -27,6 +27,7 @@ void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
 bool continueDirection(int arr[], int lastTrack, int size, bool currentDirection);
 int nextTrackSCAN(int arr[], int lastTrack, int size, bool currentDirection);
 void findNumber(int arr[], int num, int *const low, int *const high, int size);
+void nStepScan(int arr[], int startVal, int size, int N, int M);
 
 struct node {
     int distance;
@@ -96,17 +97,19 @@ int main(int argc, char *argv[])
     }
 
 
-    // shortestSeekTimeFirst(tableRequests, 100, 9);
-    // printf("\n------------------------------------\n");
-    // firstInFirstOut(tableRequests, 100, 9);
-    // printf("\n------------------------------------\n");
-    // lastInFirstOut(tableRequests, 100, 9);
-    // printf("\n------------------------------------\n");
-    // scanAlgorithm(tableRequests, true, 100, 9);
-    // printf("\n------------------------------------\n");
-    // CScanAlgorithm(tableRequests, true, 100, 9);
+    shortestSeekTimeFirst(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
+    firstInFirstOut(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
+    lastInFirstOut(tableRequests, 100, 9);
+    printf("\n------------------------------------\n");
+    scanAlgorithm(tableRequests, true, 100, 9);
+    printf("\n------------------------------------\n");
+    CScanAlgorithm(tableRequests, true, 100, 9);
     printf("\n------------------------------------\n");
     FScanAlgorithm(tableRequests, true, 100, 9, 4);
+    printf("\n------------------------------------\n");
+    nStepScan(tableRequests, 100, 9, 3, 0/* Keep 0 */);
 }
 
 void makeRandomTextFiles(const char *p_fileName, int pages)
@@ -417,6 +420,18 @@ void FScanAlgorithm(int requests[], bool startDirection, int startTrack, int siz
         scanAlgorithm(remainderQueue, startDirection, startTrack, requestRemainder);
     }
 }
+//N-step-scan
+void nStepScan(int arr[], int startVal, int size, int N, int M) {
+    int requests[N - M];
+    for (int i = M; i< N; i++)
+        requests[i] = arr[i];
+    scanAlgorithm(requests, true, startVal, size);
+    if (M = 0)
+        nStepScan(requests, startVal, size, N + N, N);
+    else
+        nStepScan(requests, startVal, size, N + M, M);
+}
+
 int ArrayContains(int arr[], int pageReference, int size)
 {
     for (int i = 0; i < size; i++)
